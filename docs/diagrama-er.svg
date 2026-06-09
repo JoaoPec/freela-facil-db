@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="720" viewBox="0 0 1180 720">
+  <style>
+    .box { fill: #ffffff; stroke: #222; stroke-width: 2; }
+    .title { font: bold 18px Arial, sans-serif; fill: #111; }
+    .text { font: 14px Arial, sans-serif; fill: #222; }
+    .line { stroke: #222; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#222" />
+    </marker>
+  </defs>
+
+  <rect width="1180" height="720" fill="#f7f7f7"/>
+  <text x="470" y="40" class="title">Diagrama ER - Freela Facil</text>
+
+  <rect x="60" y="90" width="260" height="170" rx="4" class="box"/>
+  <text x="80" y="120" class="title">clientes</text>
+  <text x="80" y="150" class="text">PK id</text>
+  <text x="80" y="175" class="text">nome</text>
+  <text x="80" y="200" class="text">email UNIQUE</text>
+  <text x="80" y="225" class="text">telefone</text>
+
+  <rect x="460" y="90" width="280" height="190" rx="4" class="box"/>
+  <text x="480" y="120" class="title">projetos</text>
+  <text x="480" y="150" class="text">PK id</text>
+  <text x="480" y="175" class="text">FK cliente_id</text>
+  <text x="480" y="200" class="text">titulo</text>
+  <text x="480" y="225" class="text">orcamento</text>
+  <text x="480" y="250" class="text">status</text>
+
+  <rect x="860" y="90" width="260" height="190" rx="4" class="box"/>
+  <text x="880" y="120" class="title">freelancers</text>
+  <text x="880" y="150" class="text">PK id</text>
+  <text x="880" y="175" class="text">nome</text>
+  <text x="880" y="200" class="text">email UNIQUE</text>
+  <text x="880" y="225" class="text">especialidade</text>
+  <text x="880" y="250" class="text">valor_hora</text>
+
+  <rect x="450" y="380" width="300" height="200" rx="4" class="box"/>
+  <text x="470" y="410" class="title">propostas</text>
+  <text x="470" y="440" class="text">PK id</text>
+  <text x="470" y="465" class="text">FK projeto_id</text>
+  <text x="470" y="490" class="text">FK freelancer_id</text>
+  <text x="470" y="515" class="text">valor</text>
+  <text x="470" y="540" class="text">prazo_dias</text>
+  <text x="470" y="565" class="text">status</text>
+
+  <rect x="80" y="430" width="260" height="170" rx="4" class="box"/>
+  <text x="100" y="460" class="title">contratos</text>
+  <text x="100" y="490" class="text">PK id</text>
+  <text x="100" y="515" class="text">FK proposta_id UNIQUE</text>
+  <text x="100" y="540" class="text">data_inicio</text>
+  <text x="100" y="565" class="text">valor_total</text>
+
+  <rect x="850" y="430" width="260" height="170" rx="4" class="box"/>
+  <text x="870" y="460" class="title">pagamentos</text>
+  <text x="870" y="490" class="text">PK id</text>
+  <text x="870" y="515" class="text">FK contrato_id</text>
+  <text x="870" y="540" class="text">valor</text>
+  <text x="870" y="565" class="text">data_pagamento</text>
+
+  <path d="M320 175 C370 175, 410 175, 460 175" class="line"/>
+  <text x="345" y="160" class="text">1:N</text>
+
+  <path d="M600 280 C600 315, 600 345, 600 380" class="line"/>
+  <text x="615" y="335" class="text">1:N</text>
+
+  <path d="M860 210 C795 250, 760 330, 700 380" class="line"/>
+  <text x="790" y="310" class="text">1:N</text>
+
+  <path d="M450 515 C400 515, 390 515, 340 515" class="line"/>
+  <text x="370" y="500" class="text">1:1</text>
+
+  <path d="M340 515 C520 650, 720 650, 850 515" class="line"/>
+  <text x="590" y="665" class="text">1:N</text>
+</svg>
