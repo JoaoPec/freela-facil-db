@@ -1,0 +1,9 @@
+# Copie para database.properties e preencha com seus dados.
+# No Railway: Postgres → Connect → copie a URL publica.
+
+jdbc.url=jdbc:postgresql://HOST:PORTA/railway?sslmode=require
+jdbc.user=postgres
+jdbc.password=SUA_SENHA_AQUI
+
+# Alternativa: defina a variavel de ambiente DATABASE_URL
+# postgresql://usuario:senha@host:porta/railway

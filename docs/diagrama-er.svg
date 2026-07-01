@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="720" viewBox="0 0 1180 720">
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="820" viewBox="0 0 1180 820">
   <style>
     .box { fill: #ffffff; stroke: #222; stroke-width: 2; }
-    .title { font: bold 18px Arial, sans-serif; fill: #111; }
-    .text { font: 14px Arial, sans-serif; fill: #222; }
+    .title { font: bold 17px Arial, sans-serif; fill: #111; }
+    .field { font: 12px Consolas, monospace; fill: #222; }
+    .rel { font: 13px Arial, sans-serif; fill: #444; }
     .line { stroke: #222; stroke-width: 2; fill: none; marker-end: url(#arrow); }
   </style>
   <defs>
@@ -11,67 +12,76 @@
     </marker>
   </defs>
 
-  <rect width="1180" height="720" fill="#f7f7f7"/>
-  <text x="470" y="40" class="title">Diagrama ER - Freela Facil</text>
+  <rect width="1180" height="820" fill="#f7f7f7"/>
+  <text x="430" y="36" class="title" font-size="20">Diagrama ER - Freela Facil</text>
 
-  <rect x="60" y="90" width="260" height="170" rx="4" class="box"/>
-  <text x="80" y="120" class="title">clientes</text>
-  <text x="80" y="150" class="text">PK id</text>
-  <text x="80" y="175" class="text">nome</text>
-  <text x="80" y="200" class="text">email UNIQUE</text>
-  <text x="80" y="225" class="text">telefone</text>
+  <rect x="40" y="70" width="300" height="210" rx="4" class="box"/>
+  <text x="58" y="96" class="title">clientes</text>
+  <text x="58" y="118" class="field">id          SERIAL PK</text>
+  <text x="58" y="136" class="field">nome        VARCHAR(100) NOT NULL</text>
+  <text x="58" y="154" class="field">email       VARCHAR(120) NOT NULL UNIQUE</text>
+  <text x="58" y="172" class="field">telefone    VARCHAR(20)</text>
+  <text x="58" y="190" class="field">criado_em   TIMESTAMP NOT NULL</text>
 
-  <rect x="460" y="90" width="280" height="190" rx="4" class="box"/>
-  <text x="480" y="120" class="title">projetos</text>
-  <text x="480" y="150" class="text">PK id</text>
-  <text x="480" y="175" class="text">FK cliente_id</text>
-  <text x="480" y="200" class="text">titulo</text>
-  <text x="480" y="225" class="text">orcamento</text>
-  <text x="480" y="250" class="text">status</text>
+  <rect x="430" y="70" width="320" height="250" rx="4" class="box"/>
+  <text x="448" y="96" class="title">projetos</text>
+  <text x="448" y="118" class="field">id          SERIAL PK</text>
+  <text x="448" y="136" class="field">cliente_id  INTEGER NOT NULL FK</text>
+  <text x="448" y="154" class="field">titulo      VARCHAR(120) NOT NULL</text>
+  <text x="448" y="172" class="field">descricao   TEXT NOT NULL</text>
+  <text x="448" y="190" class="field">orcamento   NUMERIC(10,2) NOT NULL</text>
+  <text x="448" y="208" class="field">status      VARCHAR(20) NOT NULL</text>
+  <text x="448" y="226" class="field">criado_em   TIMESTAMP NOT NULL</text>
 
-  <rect x="860" y="90" width="260" height="190" rx="4" class="box"/>
-  <text x="880" y="120" class="title">freelancers</text>
-  <text x="880" y="150" class="text">PK id</text>
-  <text x="880" y="175" class="text">nome</text>
-  <text x="880" y="200" class="text">email UNIQUE</text>
-  <text x="880" y="225" class="text">especialidade</text>
-  <text x="880" y="250" class="text">valor_hora</text>
+  <rect x="840" y="70" width="300" height="230" rx="4" class="box"/>
+  <text x="858" y="96" class="title">freelancers</text>
+  <text x="858" y="118" class="field">id             SERIAL PK</text>
+  <text x="858" y="136" class="field">nome           VARCHAR(100) NOT NULL</text>
+  <text x="858" y="154" class="field">email          VARCHAR(120) NOT NULL UNIQUE</text>
+  <text x="858" y="172" class="field">especialidade  VARCHAR(80) NOT NULL</text>
+  <text x="858" y="190" class="field">valor_hora     NUMERIC(10,2) NOT NULL</text>
+  <text x="858" y="208" class="field">criado_em      TIMESTAMP NOT NULL</text>
 
-  <rect x="450" y="380" width="300" height="200" rx="4" class="box"/>
-  <text x="470" y="410" class="title">propostas</text>
-  <text x="470" y="440" class="text">PK id</text>
-  <text x="470" y="465" class="text">FK projeto_id</text>
-  <text x="470" y="490" class="text">FK freelancer_id</text>
-  <text x="470" y="515" class="text">valor</text>
-  <text x="470" y="540" class="text">prazo_dias</text>
-  <text x="470" y="565" class="text">status</text>
+  <rect x="420" y="400" width="340" height="270" rx="4" class="box"/>
+  <text x="438" y="426" class="title">propostas</text>
+  <text x="438" y="448" class="field">id             SERIAL PK</text>
+  <text x="438" y="466" class="field">projeto_id     INTEGER NOT NULL FK</text>
+  <text x="438" y="484" class="field">freelancer_id  INTEGER NOT NULL FK</text>
+  <text x="438" y="502" class="field">valor          NUMERIC(10,2) NOT NULL</text>
+  <text x="438" y="520" class="field">prazo_dias     INTEGER NOT NULL</text>
+  <text x="438" y="538" class="field">mensagem       TEXT NOT NULL</text>
+  <text x="438" y="556" class="field">status         VARCHAR(20) NOT NULL</text>
+  <text x="438" y="574" class="field">criada_em      TIMESTAMP NOT NULL</text>
 
-  <rect x="80" y="430" width="260" height="170" rx="4" class="box"/>
-  <text x="100" y="460" class="title">contratos</text>
-  <text x="100" y="490" class="text">PK id</text>
-  <text x="100" y="515" class="text">FK proposta_id UNIQUE</text>
-  <text x="100" y="540" class="text">data_inicio</text>
-  <text x="100" y="565" class="text">valor_total</text>
+  <rect x="40" y="460" width="300" height="230" rx="4" class="box"/>
+  <text x="58" y="486" class="title">contratos</text>
+  <text x="58" y="508" class="field">id           SERIAL PK</text>
+  <text x="58" y="526" class="field">proposta_id  INTEGER NOT NULL UNIQUE FK</text>
+  <text x="58" y="544" class="field">data_inicio  DATE NOT NULL</text>
+  <text x="58" y="562" class="field">data_fim     DATE</text>
+  <text x="58" y="580" class="field">valor_total  NUMERIC(10,2) NOT NULL</text>
+  <text x="58" y="598" class="field">status       VARCHAR(20) NOT NULL</text>
 
-  <rect x="850" y="430" width="260" height="170" rx="4" class="box"/>
-  <text x="870" y="460" class="title">pagamentos</text>
-  <text x="870" y="490" class="text">PK id</text>
-  <text x="870" y="515" class="text">FK contrato_id</text>
-  <text x="870" y="540" class="text">valor</text>
-  <text x="870" y="565" class="text">data_pagamento</text>
+  <rect x="840" y="460" width="300" height="230" rx="4" class="box"/>
+  <text x="858" y="486" class="title">pagamentos</text>
+  <text x="858" y="508" class="field">id              SERIAL PK</text>
+  <text x="858" y="526" class="field">contrato_id     INTEGER NOT NULL FK</text>
+  <text x="858" y="544" class="field">valor           NUMERIC(10,2) NOT NULL</text>
+  <text x="858" y="562" class="field">data_pagamento  DATE NOT NULL</text>
+  <text x="858" y="580" class="field">status          VARCHAR(20) NOT NULL</text>
 
-  <path d="M320 175 C370 175, 410 175, 460 175" class="line"/>
-  <text x="345" y="160" class="text">1:N</text>
+  <path d="M340 175 C385 175, 410 175, 430 175" class="line"/>
+  <text x="355" y="160" class="rel">1:N</text>
 
-  <path d="M600 280 C600 315, 600 345, 600 380" class="line"/>
-  <text x="615" y="335" class="text">1:N</text>
+  <path d="M590 320 C590 355, 590 375, 590 400" class="line"/>
+  <text x="605" y="365" class="rel">1:N</text>
 
-  <path d="M860 210 C795 250, 760 330, 700 380" class="line"/>
-  <text x="790" y="310" class="text">1:N</text>
+  <path d="M840 210 C770 280, 720 350, 680 400" class="line"/>
+  <text x="770" y="320" class="rel">1:N</text>
 
-  <path d="M450 515 C400 515, 390 515, 340 515" class="line"/>
-  <text x="370" y="500" class="text">1:1</text>
+  <path d="M420 535 C380 535, 360 535, 340 535" class="line"/>
+  <text x="365" y="520" class="rel">1:1</text>
 
-  <path d="M340 515 C520 650, 720 650, 850 515" class="line"/>
-  <text x="590" y="665" class="text">1:N</text>
+  <path d="M340 575 C520 700, 720 700, 840 575" class="line"/>
+  <text x="560" y="715" class="rel">1:N</text>
 </svg>

@@ -4,3 +4,4 @@ lib/*.jar
 .idea/
 .vscode/
 *.log
+config/database.properties

@@ -56,47 +56,114 @@ O diagrama esta em [docs/diagrama-er.svg](docs/diagrama-er.svg).
 - Function: `fn_total_pago_contrato`.
 - Procedure: `sp_aceitar_proposta`.
 
-## Como criar o banco
+## Visao geral do projeto
 
-1. Crie um banco PostgreSQL chamado `freela_facil`.
-2. Execute o script:
+Este e um trabalho de faculdade de Banco de Dados com duas partes:
 
-```bash
-psql -U postgres -d freela_facil -f database/01_ddl.sql
-psql -U postgres -d freela_facil -f database/02_dml.sql
+1. **Banco PostgreSQL** — tabelas, relacionamentos, view, function, procedure e triggers (`database/`).
+2. **Aplicacao Java (JDBC)** — menu no terminal para CRUD e consultas (`src/`).
+
+Fluxo tipico:
+
+```
+config/database.properties  →  Conexao.java  →  DAOs  →  Main.java (menu)
 ```
 
-## Como rodar o Java
+| Pasta / arquivo | Funcao |
+|-----------------|--------|
+| `database/01_ddl.sql` | Cria tabelas, constraints, view, function, procedure |
+| `database/02_dml.sql` | Insere dados de exemplo e consultas |
+| `src/Conexao.java` | Abre conexao JDBC com o PostgreSQL |
+| `src/*DAO.java` | Comandos SQL (INSERT, SELECT, UPDATE, DELETE) |
+| `src/Main.java` | Menu interativo no terminal |
+| `docs/modelo-dados.html` | Documentacao visual do modelo ER |
 
-Baixe o driver JDBC do PostgreSQL e coloque o arquivo `.jar` dentro da pasta `lib`.
+## Conexao com o banco (Railway)
 
-Link: https://jdbc.postgresql.org/download/
+O JDBC le a configuracao nesta ordem:
 
-Compile:
+1. Variavel de ambiente `DATABASE_URL` (formato `postgresql://usuario:senha@host:porta/banco`)
+2. Arquivo `config/database.properties` (nao vai para o Git)
 
-```bash
-javac -cp "lib/postgresql-42.7.4.jar" -d out src/*.java
+### Configurar
+
+```powershell
+cd freela-facil-db
+copy config\database.properties.example config\database.properties
 ```
 
-Execute:
+Edite `config/database.properties` com os dados do Railway (Postgres → Connect):
 
-```bash
+```properties
+jdbc.url=jdbc:postgresql://HOST:PORTA/railway?sslmode=require
+jdbc.user=postgres
+jdbc.password=SUA_SENHA
+```
+
+Ou defina a URL completa:
+
+```powershell
+$env:DATABASE_URL = "postgresql://postgres:SENHA@HOST:PORTA/railway"
+```
+
+## Como rodar (Windows / PowerShell)
+
+### 1. Baixar o driver JDBC
+
+Baixe o `.jar` do PostgreSQL e coloque em `lib/`:
+
+https://jdbc.postgresql.org/download/
+
+Exemplo: `lib/postgresql-42.7.4.jar`
+
+### 2. Compilar
+
+```powershell
+javac -encoding UTF-8 -cp "lib/postgresql-42.7.4.jar" -d out src/*.java
+```
+
+### 3. Criar tabelas e dados no Railway (primeira vez)
+
+```powershell
+java -cp "out;lib/postgresql-42.7.4.jar" SetupDatabase
+```
+
+Isso executa `01_ddl.sql` e `02_dml.sql` no banco configurado.
+
+### 4. Testar conexao (opcional)
+
+```powershell
+java -cp "out;lib/postgresql-42.7.4.jar" TesteConexao
+```
+
+### 5. Rodar o sistema
+
+```powershell
 java -cp "out;lib/postgresql-42.7.4.jar" Main
 ```
 
-Se o nome do `.jar` baixado for diferente, ajuste o comando.
+No Linux/macOS troque `;` por `:` no `-cp`.
 
-## Configuracao da conexao
+## Menu do sistema
 
-O arquivo [src/Conexao.java](src/Conexao.java) usa os seguintes dados:
+Ao rodar `Main`, aparece um menu com:
 
-```java
-private static final String URL = "jdbc:postgresql://localhost:5432/freela_facil";
-private static final String USUARIO = "postgres";
-private static final String SENHA = "postgres";
+- **1–4** — CRUD de clientes
+- **5–8** — CRUD de projetos
+- **9–10** — Propostas (com JOIN)
+- **11** — Aceitar proposta (`sp_aceitar_proposta`)
+- **12–13** — Pagamentos e total pago (`fn_total_pago_contrato`)
+- **14** — View `vw_resumo_projetos`
+- **0** — Sair
+
+## Alternativa: criar banco com psql
+
+Se tiver o `psql` instalado:
+
+```bash
+psql "postgresql://usuario:senha@host:porta/railway" -f database/01_ddl.sql
+psql "postgresql://usuario:senha@host:porta/railway" -f database/02_dml.sql
 ```
-
-Altere usuario e senha se o seu PostgreSQL estiver diferente.
 
 ## O que apresentar
 

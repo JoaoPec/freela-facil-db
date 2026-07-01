@@ -24,7 +24,7 @@
 
     main {
       width: 1120px;
-      min-height: 790px;
+      min-height: auto;
       margin: 24px auto;
       padding: 34px 42px;
       background: #ffffff;
@@ -113,6 +113,66 @@
       background: #f5f7fa;
     }
 
+    .schemas {
+      margin-top: 28px;
+      page-break-before: always;
+    }
+
+    .schema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .schema-card {
+      border: 1px solid #d6d9de;
+      background: #fafafa;
+      overflow: hidden;
+    }
+
+    .schema-card h3 {
+      margin: 0;
+      padding: 10px 14px;
+      font-size: 15px;
+      background: #1f2933;
+      color: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 7px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e4e7eb;
+    }
+
+    th {
+      background: #eef2f6;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    td code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      color: #1d4ed8;
+    }
+
+    .pk {
+      color: #b45309;
+      font-weight: 600;
+    }
+
+    .fk {
+      color: #047857;
+      font-weight: 600;
+    }
+
     @media print {
       body {
         background: #ffffff;
@@ -172,6 +232,116 @@
           <p>Um cliente pode cadastrar varios projetos, mas cada projeto pertence a apenas um cliente.</p>
           <p>Um projeto pode receber varias propostas. Cada proposta pertence a um projeto e a um freelancer.</p>
           <p>Quando uma proposta e aceita, ela gera um contrato. Depois disso, o contrato pode receber varios pagamentos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="schemas">
+      <h2>Schemas das Tabelas</h2>
+      <p>Tipos de dados conforme o script DDL (<code>database/01_ddl.sql</code>) em PostgreSQL.</p>
+
+      <div class="schema-grid">
+        <div class="schema-card">
+          <h3>clientes</h3>
+          <table>
+            <thead>
+              <tr><th>Campo</th><th>Tipo</th><th>Restrições</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="pk">id</td><td><code>SERIAL</code></td><td>PRIMARY KEY</td></tr>
+              <tr><td>nome</td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td></tr>
+              <tr><td>email</td><td><code>VARCHAR(120)</code></td><td>NOT NULL, UNIQUE</td></tr>
+              <tr><td>telefone</td><td><code>VARCHAR(20)</code></td><td>—</td></tr>
+              <tr><td>criado_em</td><td><code>TIMESTAMP</code></td><td>NOT NULL, DEFAULT now()</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="schema-card">
+          <h3>freelancers</h3>
+          <table>
+            <thead>
+              <tr><th>Campo</th><th>Tipo</th><th>Restrições</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="pk">id</td><td><code>SERIAL</code></td><td>PRIMARY KEY</td></tr>
+              <tr><td>nome</td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td></tr>
+              <tr><td>email</td><td><code>VARCHAR(120)</code></td><td>NOT NULL, UNIQUE</td></tr>
+              <tr><td>especialidade</td><td><code>VARCHAR(80)</code></td><td>NOT NULL</td></tr>
+              <tr><td>valor_hora</td><td><code>NUMERIC(10,2)</code></td><td>NOT NULL, &gt; 0</td></tr>
+              <tr><td>criado_em</td><td><code>TIMESTAMP</code></td><td>NOT NULL, DEFAULT now()</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="schema-card">
+          <h3>projetos</h3>
+          <table>
+            <thead>
+              <tr><th>Campo</th><th>Tipo</th><th>Restrições</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="pk">id</td><td><code>SERIAL</code></td><td>PRIMARY KEY</td></tr>
+              <tr><td class="fk">cliente_id</td><td><code>INTEGER</code></td><td>NOT NULL, FK → clientes</td></tr>
+              <tr><td>titulo</td><td><code>VARCHAR(120)</code></td><td>NOT NULL</td></tr>
+              <tr><td>descricao</td><td><code>TEXT</code></td><td>NOT NULL</td></tr>
+              <tr><td>orcamento</td><td><code>NUMERIC(10,2)</code></td><td>NOT NULL, &gt; 0</td></tr>
+              <tr><td>status</td><td><code>VARCHAR(20)</code></td><td>ABERTO, EM_ANDAMENTO, FINALIZADO, CANCELADO</td></tr>
+              <tr><td>criado_em</td><td><code>TIMESTAMP</code></td><td>NOT NULL, DEFAULT now()</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="schema-card">
+          <h3>propostas</h3>
+          <table>
+            <thead>
+              <tr><th>Campo</th><th>Tipo</th><th>Restrições</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="pk">id</td><td><code>SERIAL</code></td><td>PRIMARY KEY</td></tr>
+              <tr><td class="fk">projeto_id</td><td><code>INTEGER</code></td><td>NOT NULL, FK → projetos</td></tr>
+              <tr><td class="fk">freelancer_id</td><td><code>INTEGER</code></td><td>NOT NULL, FK → freelancers</td></tr>
+              <tr><td>valor</td><td><code>NUMERIC(10,2)</code></td><td>NOT NULL, &gt; 0</td></tr>
+              <tr><td>prazo_dias</td><td><code>INTEGER</code></td><td>NOT NULL, &gt; 0</td></tr>
+              <tr><td>mensagem</td><td><code>TEXT</code></td><td>NOT NULL</td></tr>
+              <tr><td>status</td><td><code>VARCHAR(20)</code></td><td>PENDENTE, ACEITA, RECUSADA</td></tr>
+              <tr><td>criada_em</td><td><code>TIMESTAMP</code></td><td>NOT NULL, DEFAULT now()</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="schema-card">
+          <h3>contratos</h3>
+          <table>
+            <thead>
+              <tr><th>Campo</th><th>Tipo</th><th>Restrições</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="pk">id</td><td><code>SERIAL</code></td><td>PRIMARY KEY</td></tr>
+              <tr><td class="fk">proposta_id</td><td><code>INTEGER</code></td><td>NOT NULL, UNIQUE, FK → propostas</td></tr>
+              <tr><td>data_inicio</td><td><code>DATE</code></td><td>NOT NULL</td></tr>
+              <tr><td>data_fim</td><td><code>DATE</code></td><td>—</td></tr>
+              <tr><td>valor_total</td><td><code>NUMERIC(10,2)</code></td><td>NOT NULL, &gt; 0</td></tr>
+              <tr><td>status</td><td><code>VARCHAR(20)</code></td><td>ATIVO, FINALIZADO, CANCELADO</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="schema-card">
+          <h3>pagamentos</h3>
+          <table>
+            <thead>
+              <tr><th>Campo</th><th>Tipo</th><th>Restrições</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="pk">id</td><td><code>SERIAL</code></td><td>PRIMARY KEY</td></tr>
+              <tr><td class="fk">contrato_id</td><td><code>INTEGER</code></td><td>NOT NULL, FK → contratos</td></tr>
+              <tr><td>valor</td><td><code>NUMERIC(10,2)</code></td><td>NOT NULL, &gt; 0</td></tr>
+              <tr><td>data_pagamento</td><td><code>DATE</code></td><td>NOT NULL</td></tr>
+              <tr><td>status</td><td><code>VARCHAR(20)</code></td><td>PENDENTE, PAGO, CANCELADO</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
