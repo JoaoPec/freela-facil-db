@@ -174,21 +174,3 @@ Se tiver o `psql` instalado:
 psql "postgresql://usuario:senha@host:porta/railway" -f database/01_ddl.sql
 psql "postgresql://usuario:senha@host:porta/railway" -f database/02_dml.sql
 ```
-
-## O que apresentar
-
-1. Explicar o problema do sistema.
-2. Mostrar o modelo conceitual e o modelo logico.
-3. Mostrar as tabelas e relacionamentos.
-4. Executar exemplos de CRUD no Java.
-5. Mostrar a consulta com JOIN.
-6. Mostrar a view `vw_resumo_projetos`.
-7. Mostrar a function `fn_total_pago_contrato`.
-8. Mostrar a procedure `sp_aceitar_proposta`.
-9. Mostrar os relatorios com GROUP BY e HAVING (opcoes 15 a 17).
-
-## Conclusao
-
-O trabalho ajuda a praticar modelagem relacional, comandos SQL, relacionamento entre tabelas e integracao com Java usando JDBC. A maior dificuldade fica em conectar corretamente o Java ao banco e organizar os comandos SQL com `PreparedStatement`.
-
-Possiveis melhorias seriam criar uma interface grafica, autenticar usuarios, adicionar categorias de projetos e melhorar o controle de pagamentos.
