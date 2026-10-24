@@ -195,11 +195,18 @@
       <div class="subtitle">Sistema Freela Facil - Plataforma simples de freelancers</div>
     </header>
 
+    <section>
+      <h2>Modelo Conceitual (MER - notação Chen)</h2>
+      <div class="diagram">
+        <img src="mer-conceitual.png" alt="MER conceitual em notação Chen do sistema Freela Facil" style="max-width:100%">
+      </div>
+    </section>
+
     <section class="grid">
       <div>
-        <h2>Diagrama ER</h2>
+        <h2>Modelo Lógico Relacional</h2>
         <div class="diagram">
-          <img src="diagrama-er.svg" alt="Diagrama ER do sistema Freela Facil">
+          <img src="modelo-logico.png" alt="Modelo lógico relacional do sistema Freela Facil">
         </div>
       </div>
 
@@ -344,6 +351,26 @@
           </table>
         </div>
       </div>
+    </section>
+
+    <section class="schemas">
+      <h2>Mapeamento Conceitual → Lógico</h2>
+      <p>Como cada elemento do MER (notação Chen) virou tabela, chave ou restrição no modelo relacional.</p>
+      <table>
+        <thead>
+          <tr><th>Conceitual (Chen)</th><th>Cardinalidade</th><th>Lógico (relacional)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Entidades CLIENTE, FREELANCER, PROJETO, CONTRATO, PAGAMENTO</td><td>-</td><td>Uma tabela para cada entidade, com <span class="pk">id SERIAL</span> como PK</td></tr>
+          <tr><td>CLIENTE <em>publica</em> PROJETO</td><td>1:N</td><td><span class="fk">projetos.cliente_id</span> → clientes(id), NOT NULL (FK no lado N)</td></tr>
+          <tr><td>PROJETO <em>recebe</em> PROPOSTA</td><td>1:N</td><td><span class="fk">propostas.projeto_id</span> → projetos(id), NOT NULL</td></tr>
+          <tr><td>FREELANCER <em>envia</em> PROPOSTA</td><td>1:N</td><td><span class="fk">propostas.freelancer_id</span> → freelancers(id), NOT NULL</td></tr>
+          <tr><td>FREELANCER × PROJETO (via entidade associativa PROPOSTA)</td><td>N:N</td><td>Tabela associativa <strong>propostas</strong> com as duas FKs e atributos próprios (valor, prazo_dias, mensagem, status)</td></tr>
+          <tr><td>PROPOSTA <em>gera</em> CONTRATO</td><td>1:1 (opcional)</td><td><span class="fk">contratos.proposta_id</span> → propostas(id) com <strong>UNIQUE</strong>, garantindo no máximo um contrato por proposta</td></tr>
+          <tr><td>CONTRATO <em>possui</em> PAGAMENTO</td><td>1:N</td><td><span class="fk">pagamentos.contrato_id</span> → contratos(id), NOT NULL</td></tr>
+          <tr><td>Atributos com domínio fixo (status, valores)</td><td>-</td><td>Constraints CHECK (status IN (...), valor &gt; 0, prazo_dias &gt; 0)</td></tr>
+        </tbody>
+      </table>
     </section>
   </main>
 </body>

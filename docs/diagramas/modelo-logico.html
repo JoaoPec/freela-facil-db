@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body><script src="er.js"></script><script>
+setup(1350,900);
+const c=table(80,50,230,'CLIENTES',[PK('ID'),F('NOME'),F('EMAIL'),F('TELEFONE'),F('CRIADO_EM')]);
+const p=table(560,50,230,'PROJETOS',[PK('ID'),FK('CLIENTE_ID'),F('TITULO'),F('DESCRICAO'),F('ORCAMENTO'),F('STATUS'),F('CRIADO_EM')]);
+const f=table(80,380,230,'FREELANCERS',[PK('ID'),F('NOME'),F('EMAIL'),F('ESPECIALIDADE'),F('VALOR_HORA'),F('CRIADO_EM')]);
+const pr=table(560,380,230,'PROPOSTAS',[PK('ID'),FK('PROJETO_ID'),FK('FREELANCER_ID'),F('VALOR'),F('PRAZO_DIAS'),F('MENSAGEM'),F('STATUS'),F('CRIADA_EM')]);
+const ct=table(1040,358,230,'CONTRATOS',[PK('ID'),FK('PROPOSTA_ID'),F('DATA_INICIO'),F('DATA_FIM'),F('VALOR_TOTAL'),F('STATUS')]);
+const pg=table(1040,680,230,'PAGAMENTOS',[PK('ID'),FK('CONTRATO_ID'),F('VALOR'),F('DATA_PAGAMENTO'),F('STATUS')]);
+wire([[310,c.row(0)],[430,c.row(0)],[430,p.row(1)],[560,p.row(1)]],1);
+card(318,c.row(0)-13,'(1,1)',12); card(520,p.row(1)-13,'(0,n)',12);
+wire([[p.cx,p.b],[p.cx,380]],1);
+card(p.cx+10,p.b+20,'(1,1)',12); card(p.cx+10,362,'(0,n)',12);
+wire([[310,f.row(0)],[430,f.row(0)],[430,pr.row(2)],[560,pr.row(2)]],1);
+card(318,f.row(0)-13,'(1,1)',12); card(520,pr.row(2)-13,'(0,n)',12);
+wire([[790,pr.row(0)],[1040,ct.row(1)]],1);
+card(798,pr.row(0)-13,'(1,1)',12); card(1000,ct.row(1)-13,'(0,1)',12);
+wire([[ct.cx,ct.b],[ct.cx,680]],1);
+card(ct.cx+10,ct.b+20,'(1,1)',12); card(ct.cx+10,662,'(0,n)',12);
+</script></body></html>

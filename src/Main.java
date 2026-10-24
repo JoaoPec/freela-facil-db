@@ -7,6 +7,7 @@ public class Main {
         ProjetoDAO projetoDAO = new ProjetoDAO();
         PropostaDAO propostaDAO = new PropostaDAO();
         PagamentoDAO pagamentoDAO = new PagamentoDAO();
+        RelatorioDAO relatorioDAO = new RelatorioDAO();
 
         int opcao = -1;
 
@@ -27,6 +28,9 @@ public class Main {
             System.out.println("12 - Registrar pagamento");
             System.out.println("13 - Calcular total pago usando function");
             System.out.println("14 - Listar view de resumo");
+            System.out.println("15 - Relatorio: freelancers mais ativos (GROUP BY/HAVING)");
+            System.out.println("16 - Relatorio: clientes que mais investem (GROUP BY/HAVING)");
+            System.out.println("17 - Relatorio: contratos com saldo a pagar (GROUP BY/HAVING)");
             System.out.println("0 - Sair");
             System.out.print("Escolha: ");
 
@@ -104,6 +108,16 @@ public class Main {
                 pagamentoDAO.mostrarTotalPago(contratoId);
             } else if (opcao == 14) {
                 projetoDAO.listarViewResumo();
+            } else if (opcao == 15) {
+                System.out.print("Minimo de propostas: ");
+                int minimo = Integer.parseInt(scanner.nextLine());
+                relatorioDAO.freelancersMaisAtivos(minimo);
+            } else if (opcao == 16) {
+                System.out.print("Valor minimo contratado: ");
+                double valorMinimo = Double.parseDouble(scanner.nextLine());
+                relatorioDAO.clientesQueMaisInvestem(valorMinimo);
+            } else if (opcao == 17) {
+                relatorioDAO.contratosComSaldo();
             }
         }
 

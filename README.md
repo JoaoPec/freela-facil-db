@@ -36,9 +36,17 @@ Trabalho final da disciplina de Banco de Dados.
 - Uma proposta aceita pode gerar um contrato.
 - Um contrato pode ter varios pagamentos.
 
-## Diagrama ER
+## Modelos de dados
 
-O diagrama esta em [docs/diagrama-er.svg](docs/diagrama-er.svg).
+### Modelo conceitual (MER - notacao Chen)
+
+![Modelo conceitual](docs/mer-conceitual.png)
+
+### Modelo logico relacional
+
+![Modelo logico](docs/modelo-logico.png)
+
+O N:N entre freelancers e projetos e resolvido pela tabela associativa `propostas`. O mapeamento completo esta em [docs/trabalho-final.md](docs/trabalho-final.md).
 
 ## Scripts SQL
 
@@ -48,13 +56,14 @@ O diagrama esta em [docs/diagrama-er.svg](docs/diagrama-er.svg).
 ## Recursos obrigatorios usados
 
 - Minimo de 5 entidades: o projeto possui 6 entidades.
-- Modelo ER: disponivel em SVG.
+- Modelo conceitual (Chen) e modelo logico: imagens em `docs/` (fontes em `docs/diagramas/`).
 - DDL e DML: scripts separados na pasta `database`.
 - CRUD completo: implementado em Java com JDBC.
 - JOIN: existem consultas no SQL e no Java.
 - View: `vw_resumo_projetos`.
 - Function: `fn_total_pago_contrato`.
 - Procedure: `sp_aceitar_proposta`.
+- GROUP BY, HAVING e ORDER BY: 3 relatorios em `02_dml.sql` e em `RelatorioDAO.java`.
 
 ## Visao geral do projeto
 
@@ -154,6 +163,7 @@ Ao rodar `Main`, aparece um menu com:
 - **11** — Aceitar proposta (`sp_aceitar_proposta`)
 - **12–13** — Pagamentos e total pago (`fn_total_pago_contrato`)
 - **14** — View `vw_resumo_projetos`
+- **15–17** — Relatorios com JOIN + GROUP BY + HAVING + ORDER BY
 - **0** — Sair
 
 ## Alternativa: criar banco com psql
@@ -168,13 +178,14 @@ psql "postgresql://usuario:senha@host:porta/railway" -f database/02_dml.sql
 ## O que apresentar
 
 1. Explicar o problema do sistema.
-2. Mostrar o diagrama ER.
+2. Mostrar o modelo conceitual e o modelo logico.
 3. Mostrar as tabelas e relacionamentos.
 4. Executar exemplos de CRUD no Java.
 5. Mostrar a consulta com JOIN.
 6. Mostrar a view `vw_resumo_projetos`.
 7. Mostrar a function `fn_total_pago_contrato`.
 8. Mostrar a procedure `sp_aceitar_proposta`.
+9. Mostrar os relatorios com GROUP BY e HAVING (opcoes 15 a 17).
 
 ## Conclusao
 
